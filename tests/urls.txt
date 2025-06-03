@@ -1,0 +1,13 @@
+http://localhost:3333/delay/100-500
+GET http://localhost:3333/delay/500-2000?terminate
+POST http://localhost:3333/delay/1800
+
+GET http://localhost:3333/random
+GET http://localhost:3333/random?terminate
+
+GET http://localhost:3333/delay/200
+GET http://localhost:3333/delay/200-1000
+GET http://localhost:3333/delay/1500?terminate
+
+GET http://localhost:3333/code
+GET http://localhost:3333/code/202

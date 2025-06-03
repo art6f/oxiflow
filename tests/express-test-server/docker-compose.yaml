@@ -1,0 +1,31 @@
+services:
+  app:
+    build: app
+    ports:
+      - "3333:8083"
+    volumes:
+      - "./app:/app"
+    #depends_on:
+    #  - influxdb
+    environment:
+      INFLUX_URL: http://influxdb:8086
+      INFLUX_ORG: oxiflow
+      INFLUX_BUCKET: loadstats
+      INFLUX_TOKEN: tokenMirEgal
+
+  influxdb:
+    image: influxdb:2.7
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: adminpass
+      DOCKER_INFLUXDB_INIT_ORG: oxiflow
+      DOCKER_INFLUXDB_INIT_BUCKET: loadstats
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: tokenMirEgal
+
+volumes:
+  influxdb-data:
