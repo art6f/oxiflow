@@ -22,3 +22,5 @@ Cargo.lock
 tmp*.txt
 
 node_modules
+
+oxiflow_report*.txt

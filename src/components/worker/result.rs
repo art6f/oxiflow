@@ -26,7 +26,7 @@ impl WorkerResult {
         WorkerResult::default()
     }
 
-    pub fn success(&mut self, response: &HttpResponse) {
+    pub fn add_success(&mut self, response: &HttpResponse) {
         self.totals.count_response(response);
 
         self.requests.push(Single::success(
@@ -37,7 +37,7 @@ impl WorkerResult {
         ));
     }
 
-    pub fn failure(&mut self, response: &HttpError) {
+    pub fn add_failure(&mut self, response: &HttpError) {
         self.totals.inc_error();
 
         self.requests.push(Single::failure(
