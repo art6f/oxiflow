@@ -76,6 +76,8 @@ impl<'a> FileProcessor<'a> {
     }
 }
 
+
+/// #################### Tests ####################
 #[cfg(test)]
 mod tests {
     use super::FileProcessor;

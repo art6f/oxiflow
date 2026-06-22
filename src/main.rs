@@ -3,14 +3,14 @@
 use std::error::Error;
 use std::process::ExitCode;
 
+use oxiflow::EXIT_NO_URLS_FOUND;
 use oxiflow::components::cli::{Args, Cli};
 use oxiflow::components::file_processor::FileProcessor;
 use oxiflow::components::http::client::HttpClient;
 use oxiflow::components::report;
+use oxiflow::components::worker::Worker;
 use oxiflow::components::worker::request::WorkerRequest;
 use oxiflow::components::worker::result::WorkerResult;
-use oxiflow::components::worker::Worker;
-use oxiflow::EXIT_NO_URLS_FOUND;
 
 fn main() -> ExitCode {
     let cli_tools = Cli::create();

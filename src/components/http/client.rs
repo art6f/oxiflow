@@ -8,8 +8,8 @@ use std::{
 use crate::components::http;
 use crate::components::worker::request::WorkerRequest;
 
-use crate::components::http::{error::HttpError, response::HttpResponse, HttpResult};
-use reqwest::{Client, ClientBuilder, Request, RequestBuilder};
+use crate::components::http::{HttpResult, error::HttpError, response::HttpResponse};
+use reqwest::{Client, ClientBuilder, Request};
 
 /// HTTP specific worker, used to call HTTP/HTTPS urlsØ
 pub struct HttpClient {
@@ -28,26 +28,6 @@ impl HttpClient {
         }
     }
 
-    pub fn get(&self, url: String) -> RequestBuilder {
-        self.client.get(url)
-    }
-
-    pub fn post(&self, url: String) -> RequestBuilder {
-        self.client.post(url)
-    }
-
-    pub fn put(&self, url: String) -> RequestBuilder {
-        self.client.put(url)
-    }
-
-    pub fn patch(&self, url: String) -> RequestBuilder {
-        self.client.patch(url)
-    }
-
-    pub fn delete(&self, url: String) -> RequestBuilder {
-        self.client.delete(url)
-    }
-
     pub fn resolve_request(&self, req: &WorkerRequest) -> Result<Request, Box<dyn Error>> {
         if !http::method_supported(&req.method) {
             return Err(format!("Unsupported method: '{}'", &req.method).into());
@@ -55,11 +35,11 @@ impl HttpClient {
 
         let url = req.url.clone();
         let req = match req.method.trim().to_uppercase().as_str() {
-            "GET" => self.get(url),
-            "POST" => self.post(url),
-            "PUT" => self.put(url),
-            "PATCH" => self.patch(url),
-            "DELETE" => self.delete(url),
+            "GET" => self.client.get(url),
+            "POST" => self.client.post(url),
+            "PUT" => self.client.put(url),
+            "PATCH" => self.client.patch(url),
+            "DELETE" => self.client.delete(url),
             _ => panic!("Unmatched method found, previous checks failed. This is a bug!"),
         };
 
@@ -73,9 +53,8 @@ impl HttpClient {
         let response = self.client.execute(request).await;
         let elapsed = start.elapsed().as_millis();
 
-        match response {
-            Ok(res) => Ok(HttpResponse::new(res, method, elapsed, start)),
-            Err(err) => Err(HttpError::new(err, method, elapsed, start)),
-        }
+        response
+            .map(|res| HttpResponse::new(res, method.clone(), elapsed, start))
+            .map_err(|err| HttpError::new(err, method.clone(), elapsed, start))
     }
 }

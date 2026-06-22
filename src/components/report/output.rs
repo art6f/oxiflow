@@ -71,7 +71,7 @@ impl ReportOutput {
     pub fn print_per_request(&self) {
         self.print_into("Per-request results");
 
-        for record in self.worker_result.requests.iter() {
+        for record in self.worker_result.responses.iter() {
             let (code, time) = match record.success {
                 true => {
                     let code = record.http_code.unwrap();

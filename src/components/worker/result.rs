@@ -7,7 +7,7 @@
 
 use crate::components::http::{error::HttpError, response::HttpResponse};
 
-use self::{single::Single, totals::Totals};
+use self::{single::ResultSingle, totals::ResultTotals};
 
 mod single;
 mod totals;
@@ -15,10 +15,10 @@ mod totals;
 #[derive(Default)]
 pub struct WorkerResult {
     /// per-requests detail
-    pub requests: Vec<Single>,
+    pub responses: Vec<ResultSingle>,
     
     /// total requests count
-    pub totals: Totals,
+    pub totals: ResultTotals,
 }
 
 impl WorkerResult {
@@ -29,7 +29,7 @@ impl WorkerResult {
     pub fn add_success(&mut self, response: &HttpResponse) {
         self.totals.count_response(response);
 
-        self.requests.push(Single::success(
+        self.responses.push(ResultSingle::success(
             response.url.clone(),
             response.method.clone(),
             response.code,
@@ -40,7 +40,7 @@ impl WorkerResult {
     pub fn add_failure(&mut self, response: &HttpError) {
         self.totals.inc_error();
 
-        self.requests.push(Single::failure(
+        self.responses.push(ResultSingle::failure(
             response.url.clone(),
             response.method.clone(),
             response.timeout

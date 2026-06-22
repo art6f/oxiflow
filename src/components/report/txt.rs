@@ -33,7 +33,7 @@ impl Report for ReportTxt {
     fn write_report(&self) -> Result<u128, Error> {
         let mut file = self.open_file(&self.filename)?;
 
-        for record in self.result.requests.iter() {
+        for record in self.result.responses.iter() {
             let rep_status = match record.success {
                 true => "HTTP".to_string(),
                 false => record.timeout.map_or_else(
@@ -63,6 +63,6 @@ impl Report for ReportTxt {
             log::debug!("[REPORT][TXT]: Record: bytes written {}", bytes_written);
         }
 
-        Ok(self.result.requests.len() as u128)
+        Ok(self.result.responses.len() as u128)
     }
 }

@@ -3,7 +3,7 @@
 // TODO: add request start time
 
 #[derive(Default, serde::Serialize)]
-pub struct Single {
+pub struct ResultSingle {
     pub success: bool,
     pub url: String,
     pub method: String,
@@ -12,9 +12,9 @@ pub struct Single {
     pub timeout: Option<u128>,
 }
 
-impl Single {
-    pub fn success(url: String, method: String, response_code: u16, elapsed: u128) -> Single {
-        Single {
+impl ResultSingle {
+    pub fn success(url: String, method: String, response_code: u16, elapsed: u128) -> ResultSingle {
+        ResultSingle {
             success: true,
             url,
             method,
@@ -24,8 +24,8 @@ impl Single {
         }
     }
 
-    pub fn failure(url: String, method: String, timeout: Option<u128>) -> Single {
-        Single {
+    pub fn failure(url: String, method: String, timeout: Option<u128>) -> ResultSingle {
+        ResultSingle {
             success: false,
             url,
             method,

@@ -22,14 +22,14 @@ impl ResponseCountAverage {
     }
 }
 
-pub struct Totals {
+pub struct ResultTotals {
     pub responses: ResponseCountAverage,
     pub errors: u32,
     pub skipped: u32,
     pub by_code: [ResponseCountAverage; 6],
 }
 
-impl Totals {
+impl ResultTotals {
     /// calculate average reponse time from current average and success resonses
     pub fn count_response(&mut self, response: &HttpResponse) {
         self.responses.add_recalculate(response.response_time);
@@ -56,7 +56,7 @@ impl Totals {
     }
 }
 
-impl Default for Totals {
+impl Default for ResultTotals {
     fn default() -> Self {
         let codes = [ResponseCountAverage::default(); 6];
 
