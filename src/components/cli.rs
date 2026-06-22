@@ -82,7 +82,7 @@ pub struct Args {
 }
 
 #[derive(ValueEnum, Clone, Debug)]
-#[clap(rename_all="kebab-case")]
+#[clap(rename_all = "kebab-case")]
 pub enum ReportFormats {
     Csv,
     Txt,
@@ -187,7 +187,7 @@ mod tests {
             --delay 5 http://address.local/long-test",
         );
 
-        let cli = Cli::new(test_args).map_or_else(|err| panic!("{}", err), |instance| instance);
+        let cli = Cli::new(test_args).unwrap_or_else(|err| panic!("{}", err));
 
         assert_eq!(cli.args.verbosity, 3);
         assert_eq!(&cli.args.method, "TEST123");
@@ -205,8 +205,7 @@ mod tests {
             "program_name.exe -vvvv -mTEST123 -c2 -r3 -t4 -d5 http://address.local/short-test",
         );
 
-        let cli = Cli::new(test_args)
-            .map_or_else(|_| panic!("Unable to create CLI"), |instance| instance);
+        let cli = Cli::new(test_args).unwrap_or_else(|_| panic!("Unable to create CLI"));
 
         assert_eq!(cli.args.verbosity, 4);
         assert_eq!(&cli.args.method, "TEST123");
@@ -222,7 +221,7 @@ mod tests {
     fn test_short_file() {
         let test_args = self::create_iter_from_cmd("program_name.exe -c3 -r2 -t1 -f filename.txt");
 
-        let cli = Cli::new(test_args).map_or_else(|err| panic!("{}", err), |instance| instance);
+        let cli = Cli::new(test_args).unwrap_or_else(|err| panic!("{}", err));
 
         assert_eq!(cli.args.verbosity, 0);
         assert_eq!(&cli.args.method, "GET"); // default
@@ -240,7 +239,7 @@ mod tests {
         let test_args =
             self::create_iter_from_cmd("program_name.exe --repeat TWICE http://error.local/");
 
-        Cli::new(test_args).map_or_else(|err| panic!("{}", err), |instance| instance);
+        Cli::new(test_args).unwrap_or_else(|err| panic!("{}", err));
     }
 
     #[test]
@@ -249,6 +248,6 @@ mod tests {
         let test_args =
             self::create_iter_from_cmd("program_name.exe --file test.txt http://error.local/");
 
-        Cli::new(test_args).map_or_else(|err| panic!("{}", err), |instance| instance);
+        Cli::new(test_args).unwrap_or_else(|err| panic!("{}", err));
     }
 }

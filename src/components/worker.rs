@@ -117,19 +117,27 @@ impl Worker {
         }
     }
 
+    // TODO: Simplify results set
     async fn join_queue(&mut self, result: &mut Box<WorkerResult>, progress_bar: &mut Oxibar) {
-        while let Some(res) = self.queue_handles.join_next().await {
+        loop {
+            let task_result = self.queue_handles.join_next().await;
+
             if log::max_level() <= log::Level::Warn {
                 progress_bar.advance().print();
             }
 
+            let res = match task_result {
+                Some(val) => val,
+                None => break,
+            };
+
             match res.unwrap() {
                 Ok(client_response) => {
-                    result.success(&client_response);
+                    result.add_success(&client_response);
                     log::info!(target: "worker::request", "Response: {}", client_response);
                 }
                 Err(client_error) => {
-                    result.failure(&client_error);
+                    result.add_failure(&client_error);
                     log::info!(target: "worker::request", "Failed: {}", client_error);
                 }
             }

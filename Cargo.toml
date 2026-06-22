@@ -1,11 +1,11 @@
 [package]
 name = "oxiflow"
-version = "1.0.0"
-edition = "2021"
+version = "1.1.8"
+edition = "2024"
 description = "Minimal HTTP loadtester with concurrency"
 license = "GPL-3.0"
-repository = "https://github.com/artemoliynyk/oxiflow/"
-rust-version = "1.75.0"
+repository = "https://github.com/art6f/oxiflow/"
+rust-version = "1.96.0"
 
 [dependencies]
 clap = { version = "4.4.8", features = ["derive"] }
@@ -18,7 +18,6 @@ serde = { version = "1.0.198", features = ["derive"] }
 chrono = "0.4.38"
 
 [lints.rust]
-rust_2018_idioms = "deny"
 elided_lifetimes_in_paths = "warn"
 keyword_idents = "warn"
 non_ascii_idents = "warn"

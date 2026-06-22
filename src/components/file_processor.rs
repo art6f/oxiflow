@@ -27,7 +27,7 @@ impl<'a> FileProcessor<'a> {
 
         let mut requests: Vec<WorkerRequest> = Vec::new();
 
-        for line in lines.flatten() {
+        for line in lines.map_while(Result::ok) {
             if line.is_empty() {
                 continue;
             }

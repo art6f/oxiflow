@@ -13,10 +13,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/release')
     runs-on: windows-latest
     steps:
-    - name: prepare rust 1.75
+    - name: prepare rust 1.96.0
       run: |
-        rustup install 1.75.0
-        rustup default 1.75.0
+        rustup install 1.96.0
+        rustup default 1.96.0
 
     - uses: actions/checkout@v4
     - name: test-release
