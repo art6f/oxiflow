@@ -1,11 +1,11 @@
 [package]
 name = "oxiflow"
 version = "1.0.0"
-edition = "2021"
+edition = "2024"
 description = "Minimal HTTP loadtester with concurrency"
 license = "GPL-3.0"
 repository = "https://github.com/art6f/oxiflow/"
-rust-version = "1.75.0"
+rust-version = "1.96.0"
 
 [dependencies]
 clap = { version = "4.4.8", features = ["derive"] }
