@@ -40,16 +40,16 @@ pub struct Args {
 
     /// how many request to send concurrently
     #[arg(long, short('c'), default_value_t = 1)]
-    pub concurrent: u8,
+    pub concurrent: u32,
 
     /// how many times to repeat either single URL call or of all URLs in file.
     #[arg(long, short('r'), default_value_t = 1)]
-    pub repeat: u8,
+    pub repeat: u32,
 
     /// (seconds) request timeout, all requests lasting longer will be cancelled
     #[arg(long, short('t'), default_value_t = 2)]
     pub timeout: u8,
-
+    
     /// (seconds) delay in between repeating requests or batches.
     /// If concurrency is greater than 1 - delay will occur between the batches, not individual URLs
     #[arg(long, short('d'), default_value_t = 0)]
