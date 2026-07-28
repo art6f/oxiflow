@@ -1,6 +1,6 @@
 pub mod app_info {
     pub const NAME: &str = "Oxiflow";
-    pub const VERSION: &str = "1.1.8";
+    pub const VERSION: &str = "1.2.0";
     pub const AUTHOR: &str = "Artem Oliinyk <azure.email@gmail.com";
     pub const DESCRIPTION: &str = "Small fast HTTP load-testing app";
 }

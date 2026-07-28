@@ -18,14 +18,14 @@ use crate::components::http::{client::HttpClient, HttpResult};
 
 pub struct Worker {
     http_client: &'static HttpClient,
-    concurrent: u8,
-    repeat: u8,
+    concurrent: u32,
+    repeat: u32,
     delay: u8,
     queue_handles: tokio::task::JoinSet<HttpResult>,
 }
 
 impl Worker {
-    pub fn new(http_client: &'static HttpClient, concurrent: u8, repeat: u8, delay: u8) -> Worker {
+    pub fn new(http_client: &'static HttpClient, concurrent: u32, repeat: u32, delay: u8) -> Worker {
         let handles: tokio::task::JoinSet<HttpResult> = tokio::task::JoinSet::new();
 
         Worker {
